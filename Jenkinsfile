@@ -3,11 +3,11 @@ docker.withRegistry('http://localhost:5000/') {
     stage ("Checkout") {
       dir ("scm") {
         git "https://github.com/matthera/fedora-rpmbuild"
-        def version = sh script: "git describe", returnStdout: true
+        ver = sh(script: "git describe", returnStdout: true).trim()
       }
     }
     stage ("Build Image") {
-      def mock = docker.build "matthera/fedora-rpmbuild:${version}", "scm/fedora-rpmbuild"
+      mock = docker.build "matthera/fedora-rpmbuild:${ver}", "scm"
     }
     stage ("Push Image") {
       mock.push();
