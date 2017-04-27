@@ -10,7 +10,8 @@ docker.withRegistry('http://localhost:5000/') {
       mock = docker.build "matthera/fedora-rpmbuild:${ver}", "scm"
     }
     stage ("Push Image") {
-      mock.push();
+      mock.push()
+      mock.push("latest")
     }
   }
 }
